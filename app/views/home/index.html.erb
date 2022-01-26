@@ -1,6 +1,6 @@
 <h1>Postcode Lookup</h1>
 <%= form_with url: postcode_searches_path, data: { turbo: false } do |f| %>
   <%= f.label :postcode, 'Please enter a postcode' %>
-  <%= f.text_field :postcode %>
+  <%= f.text_field :postcode, required: true %>
   <%= f.submit 'Submit' %>
 <% end %>

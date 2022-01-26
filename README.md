@@ -21,4 +21,7 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+* Design Considerations
+
+* Next Steps
+Implement client side validation of postcode input
