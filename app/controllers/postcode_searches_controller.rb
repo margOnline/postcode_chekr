@@ -4,18 +4,15 @@ require 'net/http'
 require 'uri'
 
 class PostcodeSearchesController < ApplicationController
+  attr_accessor :postcode, :allowed
+  
   SERVED_AREAS = {
     lambeth: [],
     southwark: ['sh241aa', 'sh241ab']
   }.freeze
-  # ALLOWED_POSTCODES = .freeze
-  # SERVED_AREAS = %w[Lambeth Southwark].freeze
   POSTCODE_API = 'http://postcodes.io/postcodes'
 
   def create
-    @allowed = false
-    @result = nil
-
     @postcode = params[:postcode].downcase.delete("\s")
     outside_pc = SERVED_AREAS.detect {|k,v| v.include?(@postcode) }
 
@@ -36,10 +33,7 @@ class PostcodeSearchesController < ApplicationController
   private
 
   def make_request(postcode)
-    uri = URI.parse("#{POSTCODE_API}/#{postcode}")
-    http = Net::HTTP.new(uri.host, uri.port)
-    request = Net::HTTP::Get.new(uri.request_uri)
-    response = http.request(request)
+    response = Request.new(postcode).send
     response.code == '200' ? handle_success(response) : handle_error(response)
   end
 
