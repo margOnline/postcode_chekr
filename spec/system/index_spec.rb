@@ -3,10 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe 'system test' do
-  it 'displays a form to enter a postcode' do
+  it 'displays the serving area for served postcodes known to API' do
     visit root_path
     expect(page).to have_text('Please enter a postcode')
-    fill_in 'postcode', with: 'SE1 7QD'
+    fill_in 'postcode', with: 'se1 7qd'
+    click_button 'Submit'
+    expect(page).to have_text('Southwark')
+  end
+
+  it 'displays the serving area for served postcodes unknown to API' do
+    visit root_path
+    expect(page).to have_text('Please enter a postcode')
+    fill_in 'postcode', with: 'sh24 1ab'
     click_button 'Submit'
     expect(page).to have_text('Southwark')
   end
