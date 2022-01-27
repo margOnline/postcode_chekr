@@ -18,4 +18,12 @@ RSpec.describe 'system test' do
     click_button 'Submit'
     expect(page).to have_text('Southwark')
   end
+
+  it 'displays unserved for postcodes not served' do
+    visit root_path
+    expect(page).to have_text('Please enter a postcode')
+    fill_in 'postcode', with: 'SW19 5AE'
+    click_button 'Submit'
+    expect(page).to have_text('SW19 5AE is not currently served')
+  end
 end
