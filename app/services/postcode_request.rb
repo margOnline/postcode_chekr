@@ -6,7 +6,7 @@ require 'uri'
 class PostcodeRequest
   attr_accessor :postcode
 
-  POSTCODE_API = 'http://postcodes.io/postcodes'
+  POSTCODE_API = ENV.fetch('POSTCODE_API')
 
   def initialize(postcode)
     @postcode = postcode

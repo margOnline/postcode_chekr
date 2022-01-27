@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-require 'net/http'
-require 'uri'
-# require '/services/PostcodeRequest'
-
 class PostcodeSearchesController < ApplicationController
   attr_accessor :postcode, :allowed
   
@@ -28,16 +24,9 @@ class PostcodeSearchesController < ApplicationController
 
   def find_lsoa
     if served_but_unknown?
-      @allowed = true
       response_text(:served, params[:postcode], served_to_s)
     else 
-      make_request(@postcode)
-    end
-
-    if @allowed
-      @result ||= response_text(:served, params[:postcode], @lsoa)
-    else
-      response_text(:not_served, params[:postcode])
+      make_request
     end
   end
 
@@ -49,15 +38,18 @@ class PostcodeSearchesController < ApplicationController
     SERVED_AREAS.detect {|k,v| v.include?(@postcode) }.first.to_s.capitalize
   end
 
-  def make_request(postcode)
-    response = PostcodeRequest.new(postcode).send
+  def make_request
+    response = PostcodeRequest.new(@postcode).send
     response.code == '200' ? handle_success(response) : handle_error(response)
   end
 
   def handle_success(response)
-    @lsoa = JSON.parse(response.body)['result']['lsoa'].split(' ').first
-    if SERVED_AREAS.keys.map{|key| key.to_s}.include?(@lsoa.downcase)
-      @allowed = true
+    lsoa = JSON.parse(response.body)['result']['lsoa'].split(' ').first
+
+    if SERVED_AREAS.keys.map{|key| key.to_s}.include?(lsoa.downcase)
+      response_text(:served, params[:postcode], lsoa)
+    else
+      response_text(:not_served, params[:postcode])
     end
   end
 
