@@ -26,4 +26,12 @@ RSpec.describe 'system test' do
     click_button 'Submit'
     expect(page).to have_text('SW19 5AE is not currently served')
   end
+
+  it 'displays invalid for invalid UK postcodes' do
+    visit root_path
+    expect(page).to have_text('Please enter a postcode')
+    fill_in 'postcode', with: 'SWAE'
+    click_button 'Submit'
+    expect(page).to have_text('SWAE is not a valid UK postcode')
+  end
 end

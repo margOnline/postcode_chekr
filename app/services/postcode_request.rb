@@ -3,7 +3,7 @@
 require 'net/http'
 require 'uri'
 
-class Request
+class PostcodeRequest
   attr_accessor :postcode
 
   POSTCODE_API = 'http://postcodes.io/postcodes'
