@@ -1,27 +1,37 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+PostcodeChekr
+=============
 
-Things you may want to cover:
+A simple web application to determine which service area a given postcode is within.
 
-* Ruby version
+Technical
+---------
+* Rails 7 app
+* Testing with rspec
 
-* System dependencies
+Standard setup
+--------------
 
-* Configuration
+1.  In Terminal, go to your projects directory and clone the project:
 
-* Database creation
+      git clone git@github.com:margOnline/postcode_chekr.git
 
-* Database initialization
+2.  Install gem dependencies:
 
-* How to run the test suite
+      bundle install
 
-* Services (job queues, cache servers, search engines, etc.)
+3.  Run tests to make sure they pass with your environment:
 
-* Deployment instructions
+      rspec spec
 
-* Design Considerations
+4.  Run the app! Boot your web server of choice or use the rails default
+
+    `rails server`
 
 * Next Steps
-Implement client side validation of postcode input
+  
+  * Improve tests
+  * Better solution for storing served areas and allowed postcodes 
+    e.g. consider use of a d/b
+  * Better solution for how the response is formatted and delivered

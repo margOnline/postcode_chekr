@@ -10,11 +10,13 @@ class PostcodeSearchesController < ApplicationController
       find_lsoa
     else
       @result = LsoaFinder.new(
-        @original_pc, @parsed_pc).formatted_response(:not_valid)
+        @original_pc, @parsed_pc
+      ).formatted_response(:not_valid)
     end
   end
 
   private
+
   def parse_postcode(postcode)
     postcode.downcase.delete("\s")
   end
