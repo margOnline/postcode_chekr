@@ -25,7 +25,11 @@ Standard setup
 
       rspec spec
 
-4.  Run the app! Boot your web server of choice or use the rails default
+4.  Set up the environment variables:
+
+    Copy the env.example file to a .env file in the root directory
+
+5.  Run the app! Boot your web server of choice or use the rails default:
 
     `rails server`
 
